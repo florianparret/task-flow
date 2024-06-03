@@ -1,10 +1,11 @@
 {
   "name": "task-flow-app",
+  "workspaces": ["packages/*"],
   "version": "1.0.0",
   "description": "Adeo Technical Demonstration",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:front": "npm run dev --workspace frontend"
   },
   "repository": {
     "type": "git",
