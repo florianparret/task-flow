@@ -1,11 +1,14 @@
 {
   "name": "task-flow-app",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "version": "1.0.0",
   "description": "Adeo Technical Demonstration",
   "main": "index.js",
   "scripts": {
-    "dev:front": "npm run dev --workspace frontend"
+    "dev:front": "npm run dev --workspace frontend",
+    "dev:back": "npm run dev --workspace backend"
   },
   "repository": {
     "type": "git",
