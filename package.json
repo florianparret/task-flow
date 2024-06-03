@@ -1,0 +1,19 @@
+{
+  "name": "task-flow-app",
+  "version": "1.0.0",
+  "description": "Adeo Technical Demonstration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florianparret/task-flow-app.git"
+  },
+  "author": "Florian Parret",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/florianparret/task-flow-app/issues"
+  },
+  "homepage": "https://github.com/florianparret/task-flow-app#readme"
+}
