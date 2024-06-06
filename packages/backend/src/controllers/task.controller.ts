@@ -2,7 +2,8 @@ const Task = require("../models/task.model");
 
 async function getAllTasks(request: any, reply: any) {
   try {
-    reply.send("Not implemented yet");
+    const tasks = await Task.find();
+    reply.send(tasks);
   } catch (error) {
     reply.status(500).send(error);
   }
@@ -10,7 +11,9 @@ async function getAllTasks(request: any, reply: any) {
 
 async function createTask(request: any, reply: any) {
   try {
-    reply.send("Not implemented yet");
+    const task = new Task(request.body);
+    const result = await task.save();
+    reply.send(result);
   } catch (error) {
     reply.status(500).send(error);
   }
@@ -18,7 +21,10 @@ async function createTask(request: any, reply: any) {
 
 async function updateTask(request: any, reply: any) {
   try {
-    reply.send("Not implemented yet");
+    const task = await Task.findByIdAndUpdate(request.params.id, request.body, {
+      new: true,
+    });
+    reply.send(task);
   } catch (error) {
     reply.status(500).send(error);
   }
@@ -26,12 +32,16 @@ async function updateTask(request: any, reply: any) {
 
 async function deleteTask(request: any, reply: any) {
   try {
-    reply.send("Not implemented yet");
+    await Task.findByIdAndDelete(request.params.id);
+    reply.status(204).send();
   } catch (error) {
     reply.status(500).send(error);
   }
 }
 
 module.exports = {
-    getAllTasks, createTask, updateTask, deleteTask
-}
+  getAllTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+};
