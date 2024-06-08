@@ -21,3 +21,11 @@ export async function getTasks() {
     throw new Error(error);
   }
 }
+
+export async function deleteTask(id: string) {
+  try {
+    return await Task.deleteOne({ _id: id });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
