@@ -1,44 +1,87 @@
 <template>
   <div class="container">
-    <h2>Task List</h2>
-    <ul>
-      <li v-for="(todo, index) in todos" :key="index">
-        <span :class="{ done: todo.done }" @click="doneTodo(todo)">{{ todo.content }}</span>
-        <button @click="removeTodo(index)">Remove</button>
-      </li>
-    </ul>
-    <h4 v-if="todos.length === 0">Empty list.</h4>
+    <div class="form-style-2">
+      <div class="form-style-2-heading">Task List</div>
+      <ul id="list">
+        <li v-for="(todo, index) in tasks" :key="index">
+          <span :id="todo._id" :class="{ done: todo }">{{ todo.title }}</span>
+          <button @click="updateTodo(index)">Update</button>
+          <button @click="removeTodo(index)">Remove</button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useTaskStore } from '@/stores/task.store'
+import type { Task } from '@/types/task.type';
 
-const defaultData = [
-  {
-    done: false,
-    content: 'Write a blog post'
+const store = useTaskStore()
+
+await store.fetchData()
+
+const tasks = computed<Task[]>(() => store.tasks)
+
+async function removeTodo(index: number) {
+  if (tasks) {
+    console.log("data :", tasks.value[index]._id)
+    const taskId = tasks.value[index]._id
+    if (taskId) {
+      await store.deleteData(taskId)
+      await store.fetchData()
+    }
   }
-]
-const todosData = defaultData
-const todos = ref(todosData)
 
-function doneTodo(todo: any) {
-  todo.done = !todo.done
-  saveData()
+
+  /*   console.log('index to remove:', index)
+    console.log(dat)
+  
+    const taskId = todos.value[index]._id
+    todos.value.splice(index, 1)
+  
+    deleteData(taskId) */
 }
-function removeTodo(index: any) {
-  todos.value.splice(index, 1)
-  saveData()
+function updateTodo(index: number) {
+  //TO DO
 }
-function saveData() {
-  const storageData = JSON.stringify(todos.value)
-  localStorage.setItem('todos', storageData)
-}
-console.log(import.meta.env.VITE_BASE_URL)
 </script>
 
 <style scoped>
+.form-style-2 {
+  max-width: 500px;
+  padding: 20px 12px 10px 20px;
+  font:
+    13px Arial,
+    Helvetica,
+    sans-serif;
+}
+
+.form-style-2-heading {
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 20px;
+  font-size: 15px;
+  padding-bottom: 3px;
+}
+
+.span {
+  width: 100px;
+  font-weight: bold;
+  float: left;
+  padding-top: 8px;
+  padding-right: 5px;
+}
+
+#list>li>span {
+  padding-right: 1rem;
+}
+
+#list>li>button {
+  margin-right: 1rem;
+}
+
 .container {
   margin: 20px;
   padding: auto;

@@ -2,27 +2,16 @@
   <div class="container">
     <div class="form-style-2">
       <div class="form-style-2-heading">Add a Task</div>
-      <form @submit.prevent="addTodo()">
-        <label for="field1"
-          ><span>Title <span class="required">*</span></span
-          ><input
-            v-model="newTask.title"
-            type="text"
-            class="input-field"
-            name="newTask"
-            autocomplete="off"
-        /></label>
-        <label for="field4"
-          ><span>Status</span
-          ><select v-model="newTask.status" name="field4" class="select-field">
+      <form @submit.prevent="addTask()">
+        <label for="field1"><span>Title <span class="required">*</span></span><input v-model="task.title" type="text"
+            class="input-field" name="task" autocomplete="off" placeholder="Task title" /></label>
+        <label for="field2"><span>Status</span><select v-model="task.status" name="field2" class="select-field">
             <option value="To do">To do</option>
             <option value="In progress">In progress</option>
             <option value="Done">Done</option>
-          </select></label
-        >
-        <label for="field5"
-          ><span>Description <span class="required">*</span></span
-          ><textarea v-model="newTask.description" name="field5" class="textarea-field"></textarea>
+          </select></label>
+        <label for="field3"><span>Description</span><textarea v-model="task.description" name="field3"
+            class="textarea-field" placeholder="Task description..."></textarea>
         </label>
 
         <label><span> </span><input type="submit" value="Create" /></label>
@@ -34,49 +23,28 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useTaskStore } from '@/stores/task.store'
+import type { Task } from '@/types/task.type';
 
-type Task = {
-  title: string
-  status: string
-  description: string
-}
+const store = useTaskStore()
 
 const defaultTask: Task = {
-  title: 'Default title',
+  title: '',
   status: 'Done',
-  description: 'Default description'
+  description: ''
 }
 
-const newTask = ref<Task>(defaultTask)
-const task = ref<Task>(newTask.value)
+const task = ref<Task>(defaultTask)
 
-function addTodo(): void {
-  if (newTask.value) {
+async function addTask(): Promise<void> {
+  if (task.value.title) {
     const taskToCreate: Task = {
       title: task.value.title,
       status: task.value.status,
       description: task.value.description
     }
-    saveData(taskToCreate)
-  }
-}
-
-async function saveData(task: Task): Promise<void> {
-  console.log('Task to send:', JSON.stringify(task))
-  try {
-    const result: Response | void = await fetch('http://localhost:3000/api/v1/tasks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(task)
-    }).then((response) => {
-      console.info('response', response)
-    })
-
-    console.log('Result: ', result)
-  } catch (error) {
-    console.error('Error:', error)
+    await store.saveData(taskToCreate)
+    await store.fetchData()
   }
 }
 </script>
@@ -104,7 +72,7 @@ async function saveData(task: Task): Promise<void> {
   margin: 0px 0px 15px 0px;
 }
 
-.form-style-2 label > span {
+.form-style-2 label>span {
   width: 100px;
   font-weight: bold;
   float: left;
@@ -180,5 +148,7 @@ async function saveData(task: Task): Promise<void> {
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>
