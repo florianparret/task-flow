@@ -1,19 +1,48 @@
-const fastify = require("fastify")({ logger: true });
-const mongoose = require("mongoose");
-require("dotenv").config();
+import cors from "@fastify/cors";
+import "dotenv/config";
+import Fastify, { FastifyInstance } from "fastify";
+import mongoose from "mongoose";
+import { createTask, getTasks } from "./services/task.service";
 
-// Import my routes
-const taskRoutes = require("./routes/task.routes.ts");
-// Connect to my database
-mongoose.connect(process.env.MONGO_URI, {
-}).then(() => console.log("MongoDB connected")).catch((error:any) => console.log(error));
-// Start my server
-fastify.register(taskRoutes, {prefix: '/api/v1/tasks'});
+async function start() {
+  const mongoUri: string = String(process.env.MONGO_URI);
 
-const start = async () => {
+  // Connect to my database
+  mongoose
+    .connect(mongoUri)
+    .then(() => console.log("MongoDB connected"))
+    .catch((error: any) => console.log(error));
+
+  const fastify: FastifyInstance = Fastify({
+    logger: true,
+  });
+
+  await fastify.register(cors, {
+    origin: "*",
+  });
+
+  fastify.get("/", (req, reply) => {
+    reply.send({
+      status: "Server is running",
+    });
+  });
+
+  fastify.post("/api/v1/tasks", async (request, reply) => {
+    await createTask(request.body);
+    reply.status(201).send();
+  });
+
+  fastify.get("/api/v1/tasks", async (request, reply) => {
+    const tasks = await getTasks();
+    reply.send(JSON.stringify(tasks));
+  });
+
   try {
-    await fastify.listen(process.env.PORT || 5000);
-    fastify.log.info(`Server is running on port ${fastify.server.address().port}`)
+    await fastify.listen({
+      host: "0.0.0.0",
+      port: Number(process.env.PORT) || 3000,
+    });
+    fastify.log.info(`Server is running on port`);
   } catch (error) {
     console.log(error);
   }

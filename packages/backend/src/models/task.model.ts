@@ -1,21 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const TaskSchema = mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-    enum: ["to do", "pending", "completed"],
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+const taskSchema = new mongoose.Schema({
+  title: String,
+  status: String,
+  description: String,
 });
 
-const Task = mongoose.model("Task", TaskSchema);
-
-module.exports = Task;
+export const Task = mongoose.model("Task", taskSchema);
