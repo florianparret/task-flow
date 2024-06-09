@@ -1,11 +1,12 @@
-const {MongoClient} = require('mongodb');
+import "dotenv/config";
+const { MongoClient } = require('mongodb');
 
 describe('MongoDB tests', () => {
   let connection;
   let db;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(globalThis.__MONGO_URI__, {
+    connection = await MongoClient.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -37,5 +38,17 @@ describe('MongoDB tests', () => {
     const deletedTask = await tasks.findOne({_id: '02'});
     
     expect(deletedTask).toEqual(null);
+  });
+
+  it('should update a task in collection', async () => {
+    const tasks = db.collection('tasks');
+    const mockTask = {_id: '03', Title: 'My test task to be updated'};
+
+    await tasks.insertOne(mockTask);
+    await tasks.updateOne({_id: '03'}, { $set: { Title: 'My updated task' } });
+
+    const updatedTask = await tasks.findOne({_id: '03'});
+    
+    expect(updatedTask.Title).toEqual('My updated task');
   });
 });
