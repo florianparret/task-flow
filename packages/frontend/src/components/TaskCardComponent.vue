@@ -5,8 +5,8 @@
   <div class="container">
     <div v-for="(todo, index) in tasks" :key="index" class="card-item">
       <h1 :id="todo._id" :class="{ done: todo }">{{ todo.title }}</h1>
-      <p>Description : {{ todo.description }}</p>
-      <p>Status : {{ todo.status }}</p>
+      <p class ="description">Description : {{ todo.description }}</p>
+      <p class ="status">Status : {{ todo.status }}</p>
       <div class="card-actions">
         <button @click="showModal(index)" class="btn btn-primary">Edit</button>
         <button @click="removeTodo(index)" class="btn btn-danger">Delete</button>
@@ -28,7 +28,7 @@
                       placeholder="Task description..."></textarea>
                   </label>
 
-                  <label><span> </span><input type="submit" value="Confirm" /></label>
+                  <label><span> </span><input type="submit" value="Edit" /></label>
                 </form>
               </div>
             </div>
@@ -51,15 +51,17 @@ await store.fetchData()
 const tasks = computed<Task[]>(() => store.tasks)
 
 async function removeTodo(index: number) {
-  if (tasks) {
-    console.log("data :", tasks.value[index]._id)
-    const taskId = tasks.value[index]._id
-    if (taskId) {
-      await store.deleteData(taskId)
-      await store.fetchData()
+  let isSure: boolean = window.confirm("Are you sure you want to delete this task?")
+  if (isSure) {
+    if (tasks) {
+      console.log("data :", tasks.value[index]._id)
+      const taskId = tasks.value[index]._id
+      if (taskId) {
+        await store.deleteData(taskId)
+        await store.fetchData()
+      }
     }
   }
-
 }
 const taskToUpdate = ref<Task>({
     _id: '',
@@ -91,16 +93,45 @@ const closeModal = () => (modalDisplay.value = "none");
 
 .card-item {
   border: 1px solid #ccc;
-  padding: 0.2rem;
-  margin: 2rem;
-  border-radius: 5px;
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 2rem;
   max-width: 20rem;
   max-height: 25rem;
+  line-height: 3rem;
+  background-color: black;
+  color: aliceblue;
+  position: relative;
 }
 
+.card-item:hover{ 
+     box-shadow: 1px 8px 20px grey;
+    -webkit-transition:  box-shadow .6s ease-in;
+    transition:  box-shadow .6s ease-in;
+  }
+
 .card-actions {
-  display: flex;
-  justify-content: space-between;
+  position: absolute;
+  bottom: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
 }
 
 .modal {
@@ -122,6 +153,11 @@ const closeModal = () => (modalDisplay.value = "none");
   border: 1px solid #888;
   width: 30%;
   color: black;
+  border-radius: 2rem;
+}
+
+.status {
+  margin-bottom: 3rem;
 }
 
 .close {
@@ -216,7 +252,7 @@ const closeModal = () => (modalDisplay.value = "none");
 .form-style-2 input[type='button'] {
   border: none;
   padding: 8px 15px 8px 15px;
-  background: #ff8500;
+  background: #0c0b09;
   color: #fff;
   box-shadow: 1px 1px 4px #dadada;
   -moz-box-shadow: 1px 1px 4px #dadada;
@@ -224,11 +260,12 @@ const closeModal = () => (modalDisplay.value = "none");
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
+  cursor: pointer;
 }
 
 .form-style-2 input[type='submit']:hover,
 .form-style-2 input[type='button']:hover {
-  background: #ea7b00;
+  background: #007bff;
   color: #fff;
 }
 </style>

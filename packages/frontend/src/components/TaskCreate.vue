@@ -55,12 +55,15 @@ watch(task.value, (newTask) => {
 
 <style scoped>
 .form-style-2 {
-  max-width: 500px;
   padding: 20px 12px 10px 20px;
   font:
     13px Arial,
     Helvetica,
     sans-serif;
+    border-radius: 2rem;
+    background-color: black;
+    color: aliceblue;
+    width: 100%;
 }
 
 .form-style-2-heading {
@@ -132,7 +135,7 @@ watch(task.value, (newTask) => {
 .form-style-2 input[type='button'] {
   border: none;
   padding: 8px 15px 8px 15px;
-  background: #ff8500;
+  background: #aba597;
   color: #fff;
   box-shadow: 1px 1px 4px #dadada;
   -moz-box-shadow: 1px 1px 4px #dadada;
@@ -140,12 +143,7 @@ watch(task.value, (newTask) => {
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-}
-
-.form-style-2 input[type='submit']:hover,
-.form-style-2 input[type='button']:hover {
-  background: #ea7b00;
-  color: #fff;
+  cursor: pointer;
 }
 
 .container {

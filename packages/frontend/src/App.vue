@@ -34,6 +34,7 @@ nav {
   padding: 20px;
   transition: all 0.4s ease;
   background-color: black;
+  z-index: 1;
 }
 nav.sticky {
   padding: 15px 20px;
