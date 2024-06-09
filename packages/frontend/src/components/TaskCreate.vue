@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="form-style-2">
-      <div class="form-style-2-heading">Add a Task</div>
+      <div class="form-style-2-heading">Create a new Task</div>
       <form @submit.prevent="addTask()">
         <label for="field1"><span>Title <span class="required">*</span></span><input v-model="task.title" type="text"
             class="input-field" name="task" autocomplete="off" placeholder="Task title" /></label>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useTaskStore } from '@/stores/task.store'
 import type { Task } from '@/types/task.type';
 
@@ -47,6 +47,10 @@ async function addTask(): Promise<void> {
     await store.fetchData()
   }
 }
+
+watch(task.value, (newTask) => {
+  console.log(`x is ${newTask}`)
+})
 </script>
 
 <style scoped>
