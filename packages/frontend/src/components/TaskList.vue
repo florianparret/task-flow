@@ -33,16 +33,8 @@ async function removeTodo(index: number) {
       await store.fetchData()
     }
   }
-
-
-  /*   console.log('index to remove:', index)
-    console.log(dat)
-  
-    const taskId = todos.value[index]._id
-    todos.value.splice(index, 1)
-  
-    deleteData(taskId) */
 }
+
 function updateTodo(index: number) {
   //TO DO
 }

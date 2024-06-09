@@ -1,4 +1,4 @@
-import { getData, saveData, deleteData } from '@/api/task.api'
+import { getData, saveData, deleteData, updateData } from '@/api/task.api'
 import type { Task } from '@/types/task.type'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -13,5 +13,5 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  return { fetchData, saveData, getData, deleteData, tasks }
+  return { fetchData, saveData, getData, deleteData, updateData, tasks }
 })

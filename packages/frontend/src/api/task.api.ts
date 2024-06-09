@@ -50,4 +50,23 @@ async function saveData(task: Task): Promise<void> {
     }
   }
 
-  export { saveData, getData, deleteData }
+  async function updateData(task: Task): Promise<void> {
+    console.log('Task to update:', JSON.stringify(task))
+    try {
+      const result: Response | void = await fetch(import.meta.env.VITE_BASE_URL + "/tasks/" + task._id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task)
+      }).then((response) => {
+        console.info('response', response)
+      })
+  
+      console.log('Result: ', result)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
+
+  export { saveData, getData, deleteData, updateData }
