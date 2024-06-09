@@ -1,11 +1,5 @@
 import { Task } from "../models/task.model";
 
-export type Task = {
-  title: string;
-  status: string;
-  description: string;
-};
-
 export async function createTask(task: unknown) {
   try {
     return await Task.create(task);
@@ -29,3 +23,12 @@ export async function deleteTask(id: string) {
     throw new Error(error);
   }
 }
+
+export async function updateTask(id: string, task: unknown) {
+  try {
+    return await Task.findOneAndUpdate({ _id: id }, task);
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+

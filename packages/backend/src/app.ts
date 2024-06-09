@@ -2,7 +2,7 @@ import cors from "@fastify/cors";
 import "dotenv/config";
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import mongoose from "mongoose";
-import { createTask, deleteTask, getTasks } from "./services/task.service";
+import { createTask, deleteTask, getTasks, updateTask } from "./services/task.service";
 
 async function start() {
   const mongoUri: string = String(process.env.MONGO_URI);
@@ -41,6 +41,12 @@ async function start() {
     const params = request.params as { id: string };
     await deleteTask(params.id);
     reply.status(204).send();
+  });
+
+  fastify.put("/api/v1/tasks/:id", async (request, reply) => {
+    const params = request.params as { id: string };
+    await updateTask(params.id, request.body);
+    reply.status(201).send();
   });
 
   try {
