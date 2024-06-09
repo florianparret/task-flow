@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useTaskStore } from '@/stores/task.store'
 import type { Task } from '@/types/task.type';
 
@@ -93,12 +93,11 @@ const closeModal = () => (modalDisplay.value = "none");
 
 .card-item {
   border: 1px solid #ccc;
-  padding: 0.5rem;
+  padding: 1.5rem;
   margin: 1rem;
   border-radius: 2rem;
   max-width: 20rem;
   max-height: 25rem;
-  line-height: 3rem;
   background-color: black;
   color: aliceblue;
   position: relative;
@@ -123,13 +122,13 @@ const closeModal = () => (modalDisplay.value = "none");
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background-color: #aba597;
   color: white;
   border: none;
 }
 
 .btn-danger {
-  background-color: #dc3545;
+  background-color: #aba597;
   color: white;
   border: none;
 }
@@ -252,7 +251,7 @@ const closeModal = () => (modalDisplay.value = "none");
 .form-style-2 input[type='button'] {
   border: none;
   padding: 8px 15px 8px 15px;
-  background: #0c0b09;
+  background: #aba597;
   color: #fff;
   box-shadow: 1px 1px 4px #dadada;
   -moz-box-shadow: 1px 1px 4px #dadada;
@@ -261,11 +260,5 @@ const closeModal = () => (modalDisplay.value = "none");
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   cursor: pointer;
-}
-
-.form-style-2 input[type='submit']:hover,
-.form-style-2 input[type='button']:hover {
-  background: #007bff;
-  color: #fff;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-    <TaskCreate />
+    <TaskCreateComponent />
     <hr>
     <Suspense>
-        <TaskCardComponent />
+        <TaskListComponent />
         <template #fallback>
             <p>Loading...</p>
         </template>
@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import TaskCreate from '@/components/TaskCreate.vue';
-import TaskCardComponent from '@/components/TaskCardComponent.vue';
+import TaskCreateComponent from '@/components/TaskCreateComponent.vue';
+import TaskListComponent from '@/components/TaskListComponent.vue';
 </script>
 
 <style></style>

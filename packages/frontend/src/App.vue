@@ -10,11 +10,11 @@
     </div>
   </nav>
 </header>
-<FormView />
+<TaskAppView />
 </template>
 
 <script setup lang="ts">
-import FormView from "./view/FormView.vue";
+import TaskAppView from "./view/TaskAppView.vue";
 </script>
 
 <style scoped>
