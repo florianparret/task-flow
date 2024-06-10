@@ -47,10 +47,6 @@ async function addTask(): Promise<void> {
     await store.fetchData()
   }
 }
-
-watch(task.value, (newTask) => {
-  console.log(`x is ${newTask}`)
-})
 </script>
 
 <style scoped>

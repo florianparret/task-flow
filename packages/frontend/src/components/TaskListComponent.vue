@@ -54,7 +54,6 @@ async function removeTodo(index: number) {
   let isSure: boolean = window.confirm("Are you sure you want to delete this task?")
   if (isSure) {
     if (tasks) {
-      console.log("data :", tasks.value[index]._id)
       const taskId = tasks.value[index]._id
       if (taskId) {
         await store.deleteData(taskId)
@@ -78,7 +77,6 @@ async function updateTodo(task: Task) {
 
 const modalDisplay = ref("none");
 function showModal(index: number) {
-  console.log('showModal');
   modalDisplay.value = "block"
   taskToUpdate.value = tasks.value[index]
 };
