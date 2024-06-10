@@ -1,6 +1,6 @@
 import cors from "@fastify/cors";
 import "dotenv/config";
-import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import Fastify, { FastifyInstance } from "fastify";
 import mongoose from "mongoose";
 import { createTask, deleteTask, getTasks, updateTask } from "./services/task.service";
 
