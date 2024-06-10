@@ -2,7 +2,6 @@ import type { Task } from "@/types/task.type"
 
 
 async function saveData(task: Task): Promise<void> {
-    console.log('Task to send:', JSON.stringify(task))
     try {
       const result: Response | void = await fetch(import.meta.env.VITE_BASE_URL + "/tasks", {
         method: 'POST',
@@ -10,14 +9,7 @@ async function saveData(task: Task): Promise<void> {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(task)
-      }).then((response) => {
-        console.info('response', response)
-/*         if (response.ok) {
-          getData()
-        } */
       })
-  
-      console.log('Result: ', result)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -28,7 +20,6 @@ async function saveData(task: Task): Promise<void> {
       const result = await fetch(import.meta.env.VITE_BASE_URL + "/tasks", {
         method: 'GET',
       })
-      console.log('Result from API received:', result)
       return result.json();
     } catch (error) {
       console.error('Error:', error)
@@ -36,7 +27,6 @@ async function saveData(task: Task): Promise<void> {
   }
 
   async function deleteData(id: String): Promise<void> {
-    console.log('Task id to delete :', id)
     try {
       const result: Response | void = await fetch(import.meta.env.VITE_BASE_URL + "/tasks/" + id, {
         method: 'DELETE',
@@ -44,14 +34,12 @@ async function saveData(task: Task): Promise<void> {
         console.info('response', response)
       })
   
-      console.log('Result: ', result)
     } catch (error) {
       console.error('Error:', error)
     }
   }
 
   async function updateData(task: Task): Promise<void> {
-    console.log('Task to update:', JSON.stringify(task))
     try {
       const result: Response | void = await fetch(import.meta.env.VITE_BASE_URL + "/tasks/" + task._id, {
         method: 'PUT',
@@ -62,8 +50,7 @@ async function saveData(task: Task): Promise<void> {
       }).then((response) => {
         console.info('response', response)
       })
-  
-      console.log('Result: ', result)
+
     } catch (error) {
       console.error('Error:', error)
     }
